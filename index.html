@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta name="title" content="Plant Taxonomy Meets Plant Counting">
+  <meta name="description" content="A Fine-Grained, Taxonomic Dataset for Counting Hundreds of Plant Species">
+  <meta name="keywords" content="Plant Counting, Class-Agnostic Counting, Dataset and Benchmark, CVPR 2026, Oral">
+  <meta name="author" content="Jinyu Xu, Tianqi Hu, Xiaonan Hu, Letian Zhou, Songliang Cao, Meng Zhang, Hao Lu">
+  <meta name="robots" content="index, follow">
+  <meta name="language" content="English">
+
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Huazhong University of Science and Technology">
+  <meta property="og:title"
+    content="Plant Taxonomy Meets Plant Counting: A Fine-Grained, Taxonomic Dataset for Counting Hundreds of Plant Species">
+  <meta property="og:description"
+    content="We present TPC-268, the first plant counting benchmark incorporating plant taxonomy. Accepted as a CVPR 2026 Oral.">
+  <meta property="og:url" content="https://YOUR_DOMAIN.com/YOUR_PROJECT_PAGE">
+  <meta property="og:image" content="https://YOUR_DOMAIN.com/static/images/social_preview.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Plant Taxonomy Meets Plant Counting - Research Preview">
+  <meta property="article:published_time" content="2026-06-01T00:00:00.000Z">
+  <meta property="article:author" content="Jinyu Xu">
+  <meta property="article:section" content="Research">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title"
+    content="Plant Taxonomy Meets Plant Counting: A Fine-Grained, Taxonomic Dataset for Counting Hundreds of Plant Species">
+  <meta name="twitter:description"
+    content="We present TPC-268, the first plant counting benchmark incorporating plant taxonomy.">
+  <meta name="twitter:image" content="https://YOUR_DOMAIN.com/static/images/social_preview.png">
+  <meta name="twitter:image:alt" content="Plant Taxonomy Meets Plant Counting - Research Preview">
+
+  <meta name="citation_title"
+    content="Plant Taxonomy Meets Plant Counting: A Fine-Grained, Taxonomic Dataset for Counting Hundreds of Plant Species">
+  <meta name="citation_author" content="Xu, Jinyu">
+  <meta name="citation_author" content="Hu, Tianqi">
+  <meta name="citation_author" content="Hu, Xiaonan">
+  <meta name="citation_author" content="Zhou, Letian">
+  <meta name="citation_author" content="Cao, Songliang">
+  <meta name="citation_author" content="Zhang, Meng">
+  <meta name="citation_author" content="Lu, Hao">
+  <meta name="citation_publication_date" content="2026">
+  <meta name="citation_conference_title" content="CVPR">
+  <meta name="citation_pdf_url" content="https://YOUR_DOMAIN.com/static/pdfs/paper.pdf">
+
+  <meta name="theme-color" content="#2563eb">
+  <meta name="msapplication-TileColor" content="#2563eb">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://ajax.googleapis.com">
+  <link rel="preconnect" href="https://documentcloud.adobe.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+
+  <title>Plant Taxonomy Meets Plant Counting | CVPR 2026 Oral</title>
+
+  <link rel="icon" type="image/x-icon" href="static/images/favicon.ico">
+  <link rel="apple-touch-icon" href="static/images/favicon.ico">
+
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/index.css">
+  <link rel="preload" href="static/css/bulma-carousel.min.css" as="style"
+    onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="static/css/bulma-slider.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="static/css/fontawesome.all.min.css" as="style"
+    onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css" as="style"
+    onload="this.onload=null;this.rel='stylesheet'">
+
+  <noscript>
+    <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
+    <link rel="stylesheet" href="static/css/bulma-slider.min.css">
+    <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  </noscript>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
+  <script defer src="static/js/fontawesome.all.min.js"></script>
+  <script defer src="static/js/bulma-carousel.min.js"></script>
+  <script defer src="static/js/bulma-slider.min.js"></script>
+  <script defer src="static/js/index.js"></script>
+
+  <style>
+    .container.is-max-desktop {
+      max-width: 960px !important;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      color: #333;
+      background-color: #ffffff;
+      line-height: 1.6;
+    }
+
+    .publication-title {
+      font-weight: 800;
+      line-height: 1.18;
+      color: #000000;
+    }
+
+    .subtitle {
+      color: #000000;
+      font-weight: 600;
+    }
+
+    .publication-authors {
+      line-height: 1.18;
+      font-size: 1.1rem !important;
+      color: #2d3748 !important;
+    }
+
+    .publication-authors .author-block,
+    .publication-authors .is-size-7,
+    .publication-authors sup {
+      font-size: inherit !important;
+      color: inherit !important;
+    }
+
+    .publication-authors .corresponding-note {
+      color: #8a95ad !important;
+      font-style: italic;
+      margin-left: 0.4rem;
+      font-size: 0.75rem;
+    }
+
+    .content.has-text-justified p {
+      margin-bottom: 0.9em;
+      font-size: 1.05rem;
+      line-height: 1.55;
+      color: #2d3748;
+    }
+
+    .hero .hero-body {
+      padding: 2rem 1.5rem;
+    }
+
+    .section.py-6 {
+      padding-top: 2rem !important;
+      padding-bottom: 2rem !important;
+    }
+
+    .section.pt-0.pb-6 {
+      padding-bottom: 2rem !important;
+    }
+
+    .table-container {
+      overflow-x: auto;
+      margin: 1.25rem auto 1.9rem auto;
+      border-radius: 4px;
+      border: 1px solid #e2e8f0;
+      max-width: 100%;
+    }
+
+    table {
+      width: 100%;
+      background-color: #fff;
+    }
+
+    table th {
+      background-color: #f8fafc !important;
+      color: #1e293b !important;
+      font-weight: 600 !important;
+      border-bottom: 2px solid #cbd5e1 !important;
+      padding: 12px 10px !important;
+    }
+
+    table td {
+      padding: 10px !important;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    table th,
+    table td {
+      text-align: center !important;
+      vertical-align: middle !important;
+      font-size: 0.95rem;
+    }
+
+    table tbody tr:hover {
+      background-color: #f1f5f9 !important;
+    }
+
+    .best-score {
+      font-weight: 700;
+      color: #e11d48;
+    }
+
+    .section-subtitle {
+      font-weight: 700;
+      font-size: 1.25rem;
+      color: #0f172a;
+      border-left: 4px solid #e11d48;
+      padding-left: 12px;
+      margin-top: 2.2rem;
+      margin-bottom: 1rem;
+    }
+
+    .image-block {
+      border-radius: 6px;
+      border: none;
+      box-shadow: none !important;
+      width: min(100%, 780px);
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      margin-bottom: 0.5rem;
+    }
+
+    .image-caption {
+      font-size: 0.95rem;
+      color: #475569;
+      text-align: left;
+      margin-bottom: 1.4rem;
+    }
+
+    .content.has-text-justified p.image-caption {
+      font-size: 0.95rem;
+      color: #475569;
+      line-height: 1.6;
+      margin-bottom: 1.4rem;
+    }
+
+    .compact-visual .image-block {
+      max-height: 500px;
+      width: auto;
+      max-width: 100%;
+      object-fit: contain;
+    }
+
+    .item .image-caption {
+      text-align: center !important;
+    }
+
+    .results-carousel {
+      width: 100%;
+      max-width: none;
+      margin: 0 auto;
+    }
+
+    .results-carousel .item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .results-carousel .item .image-block {
+      width: min(100%, 940px) !important;
+      max-width: 100%;
+      max-height: 500px;
+      height: auto;
+      object-fit: contain;
+    }
+
+    .results-carousel .item .image-caption {
+      margin-top: 0.25rem;
+      margin-bottom: 0.55rem;
+    }
+
+    .results-carousel .slider-pagination {
+      margin-top: 0.25rem !important;
+      margin-bottom: 0 !important;
+    }
+
+    .results-carousel .slider-navigation-previous,
+    .results-carousel .slider-navigation-next {
+      top: calc(50% - 14px) !important;
+    }
+
+    .bibtex-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 0.6rem;
+    }
+
+    .bibtex-pre {
+      font-size: 0.82rem;
+      line-height: 1.35;
+      max-height: 240px;
+      padding: 1rem !important;
+      overflow: auto;
+    }
+
+    .copy-bibtex-btn.copied {
+      background-color: #2f855a !important;
+      border-color: #2f855a !important;
+      color: #ffffff !important;
+    }
+  </style>
+</head>
+
+<body>
+
+  <button class="scroll-to-top" onclick="scrollToTop()" title="Scroll to top" aria-label="Scroll to top">
+    <i class="fas fa-chevron-up"></i>
+  </button>
+
+  <main id="main-content">
+
+    <section class="hero">
+      <div class="hero-body">
+        <div class="container is-max-desktop has-text-centered">
+          <h1 class="title is-1 publication-title mb-1"
+            style="color: #000000; font-weight: 800; margin-bottom: 0.3rem !important; line-height: 1.05;">
+            Plant Taxonomy Meets Plant Counting
+          </h1>
+          <h2 class="subtitle is-3 mt-0"
+            style="color: #000000; font-weight: 600; line-height: 1.15; font-size: 2.1rem; margin-top: 0 !important;">
+            A Fine-Grained, Taxonomic Dataset for<br>Counting Hundreds of Plant Species
+          </h2>
+
+          <div class="is-size-5" style="margin-top: 0.9rem; color: #000000; line-height: 1.2;">
+            <div class="author-row">
+              <span>Jinyu Xu,</span> <span>Tianqi Hu,</span> <span>Xiaonan Hu,</span> <span>Letian Zhou,</span>
+            </div>
+            <div class="author-row" style="margin-top: 2px;">
+              <span>Songliang Cao,</span> <span>Meng Zhang,</span> <span>Hao Lu<sup>*</sup></span>
+            </div>
+          </div>
+
+          <div class="is-size-6" style="margin-top: 0.45rem;">
+            <span style="color: #000000;">Huazhong University of Science and Technology, China</span>
+            <span class="corresponding-note"
+              style="font-size: 0.75rem; color: #8a95ad; margin-left: 10px; font-style: italic;">*Corresponding
+              Author</span>
+          </div>
+
+          <div class="is-size-4" style="font-weight: 600; color: #000000; margin-top: 0.6rem;">
+            <span><i class="fas fa-seedling" aria-hidden="true" style="color: #2f855a; margin-right: 6px;"></i> CVPR
+              2026
+              Oral</span>
+          </div>
+
+          <div class="column has-text-centered" style="margin-top: 0.55rem; padding-top: 0; padding-bottom: 0;">
+            <div class="publication-links">
+              <span class="link-block">
+                <a href="https://arxiv.org/abs/2603.21229" target="_blank" class="button is-dark is-rounded ml-1">
+                  <span class="icon"><i class="fas fa-file-pdf"></i></span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://github.com/tiny-smart/TPC-268" target="_blank" class="button is-dark is-rounded ml-1">
+                  <span class="icon"><i class="fab fa-github"></i></span>
+                  <span>Code</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://huggingface.co/datasets/jinyu-xu/TPC-268" target="_blank"
+                  class="button is-dark is-rounded ml-1">
+                  <span class="icon">🤗</span>
+                  <span>Dataset</span>
+                </a>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section pt-6 pb-6" style="margin-top: 3rem !important;">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column is-10">
+            <h2 class="title is-3 has-text-centered mb-5">Abstract</h2>
+            <div class="content has-text-justified">
+              <p>
+                Visually cataloging and quantifying the natural world requires pushing the boundaries of both detailed
+                visual classification and counting at scale. Despite significant progress, particularly in crowd and
+                traffic analysis, the fine-grained, taxonomy-aware plant counting remains underexplored in vision. In
+                contrast to crowds, plants exhibit nonrigid morphologies and physical appearance variations across
+                growth stages and environments.
+              </p>
+              <p>
+                To fill this gap, we present <strong>TPC-268</strong>, the first plant counting benchmark incorporating
+                plant taxonomy. Our dataset couples instance-level point annotations with Linnaean labels (kingdom to
+                species) and organ categories, enabling hierarchical reasoning and species-aware evaluation. The dataset
+                features 10,000 images with 678,050 point annotations, includes 268 countable plant categories over 242
+                plant species in Plantae and Fungi, and spans observation scales from canopy-level remote sensing
+                imagery to tissue-level microscopy.
+              </p>
+              <p>
+                We follow the problem setting of class-agnostic counting (CAC), provide taxonomy-consistent, scale-aware
+                data splits, and benchmark state-of-the-art regression- and detection-based CAC approaches. By capturing
+                the biodiversity, hierarchical structure, and multi-scale nature of botanical and mycological taxa,
+                TPC-268 provides a biologically grounded testbed to advance fine-grained class-agnostic counting.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="hero is-light is-small py-3">
+      <div class="hero-body">
+        <div class="container is-max-desktop">
+          <div id="results-carousel" class="carousel results-carousel">
+            <div class="item px-2">
+              <img src="static/images/carousel1.jpg" alt="Comparison between plants and generic objects"
+                class="image-block" loading="lazy" />
+              <p class="image-caption">Biodiversity and morphological variations in plants versus generic objects.</p>
+            </div>
+            <div class="item px-2">
+              <img src="static/images/carousel2.jpg" alt="Distinct categories" class="image-block" loading="lazy" />
+              <p class="image-caption">Plant categories across four biological levels and scales from
+                microscopy to UAV imagery.</p>
+            </div>
+            <div class="item px-2">
+              <img src="static/images/carousel3.jpg" alt="Taxonomic hierarchy" class="image-block" loading="lazy" />
+              <p class="image-caption">Taxonomic hierarchy treemap of the species and genera in TPC-268.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section py-6">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column is-11">
+            <h2 class="title is-3 has-text-centered mb-4">Experimental Results</h2>
+
+            <div class="content has-text-justified">
+              <h3 class="section-subtitle">1. Performance on TPC-268</h3>
+              <p>
+                Regression-based paradigms consistently outperform detection-based methods, as explicit object
+                localization is severely hindered by the compact spatial arrangement and structural entanglement of
+                plant organs. LOCA achieves the best test performance by effectively integrating local structural cues.
+                In contrast, models relying primarily on global self-attention (e.g., CACViT, TasselNetV4) show strong
+                validation results but exhibit significant generalization gaps on unseen test scenes, indicating a
+                tendency to overfit validation distributions.
+              </p>
+
+              <p class="is-size-6 has-text-weight-bold mt-4 mb-2 has-text-centered">Table 2a: 3-Shot Setting</p>
+              <div class="table-container">
+                <table class="table is-hoverable">
+                  <thead>
+                    <tr>
+                      <th rowspan="2">Method</th>
+                      <th rowspan="2">Venue</th>
+                      <th rowspan="2">Backbone</th>
+                      <th colspan="3">Validation</th>
+                      <th colspan="3">Test</th>
+                    </tr>
+                    <tr>
+                      <th>MAE &darr;</th>
+                      <th>RMSE &darr;</th>
+                      <th>R&sup2; &uarr;</th>
+                      <th>MAE &darr;</th>
+                      <th>RMSE &darr;</th>
+                      <th>R&sup2; &uarr;</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>FamNet</td>
+                      <td>CVPR'21</td>
+                      <td>R50</td>
+                      <td>28.87</td>
+                      <td>52.51</td>
+                      <td>0.58</td>
+                      <td>30.43</td>
+                      <td>65.62</td>
+                      <td>0.62</td>
+                    </tr>
+                    <tr>
+                      <td>BMNet+</td>
+                      <td>CVPR'22</td>
+                      <td>R50</td>
+                      <td>29.33</td>
+                      <td>77.78</td>
+                      <td>0.47</td>
+                      <td>27.78</td>
+                      <td>57.25</td>
+                      <td>0.50</td>
+                    </tr>
+                    <tr>
+                      <td>C-DETR</td>
+                      <td>ECCV'22</td>
+                      <td>R50</td>
+                      <td>22.66</td>
+                      <td>77.51</td>
+                      <td>0.75</td>
+                      <td>22.68</td>
+                      <td>57.97</td>
+                      <td>0.74</td>
+                    </tr>
+                    <tr>
+                      <td>SPDCNet</td>
+                      <td>BMVC'22</td>
+                      <td>R18</td>
+                      <td>25.66</td>
+                      <td>72.49</td>
+                      <td>0.52</td>
+                      <td>23.70</td>
+                      <td>47.53</td>
+                      <td>0.64</td>
+                    </tr>
+                    <tr>
+                      <td>CountTR</td>
+                      <td>BMVC'22</td>
+                      <td>Hybrid</td>
+                      <td>20.21</td>
+                      <td>55.82</td>
+                      <td>0.73</td>
+                      <td>25.19</td>
+                      <td>49.94</td>
+                      <td>0.62</td>
+                    </tr>
+                    <tr>
+                      <td>SAFECount</td>
+                      <td>WACV'23</td>
+                      <td>R18</td>
+                      <td>22.57</td>
+                      <td>63.65</td>
+                      <td>0.64</td>
+                      <td>25.70</td>
+                      <td>52.30</td>
+                      <td>0.58</td>
+                    </tr>
+                    <tr>
+                      <td>LOCA</td>
+                      <td>ICCV'23</td>
+                      <td>R50</td>
+                      <td>17.26</td>
+                      <td>53.19</td>
+                      <td>0.75</td>
+                      <td class="best-score">17.51</td>
+                      <td class="best-score">38.37</td>
+                      <td class="best-score">0.78</td>
+                    </tr>
+                    <tr>
+                      <td>DAVE</td>
+                      <td>CVPR'24</td>
+                      <td>R50</td>
+                      <td class="best-score">16.47</td>
+                      <td>52.87</td>
+                      <td>0.76</td>
+                      <td>17.61</td>
+                      <td>40.06</td>
+                      <td>0.75</td>
+                    </tr>
+                    <tr>
+                      <td>CACVIT</td>
+                      <td>AAAI'24</td>
+                      <td>ViT-B</td>
+                      <td>16.63</td>
+                      <td class="best-score">42.49</td>
+                      <td>0.82</td>
+                      <td>22.04</td>
+                      <td>41.79</td>
+                      <td>0.73</td>
+                    </tr>
+                    <tr>
+                      <td>CountGD</td>
+                      <td>NeurIPS'24</td>
+                      <td>Swin-B</td>
+                      <td>18.32</td>
+                      <td>54.55</td>
+                      <td>0.74</td>
+                      <td>19.52</td>
+                      <td>50.51</td>
+                      <td>0.61</td>
+                    </tr>
+                    <tr>
+                      <td>TasselNetV4</td>
+                      <td>ISPRS'26</td>
+                      <td>ViT-B</td>
+                      <td>13.20</td>
+                      <td>43.93</td>
+                      <td>0.83</td>
+                      <td>22.95</td>
+                      <td>51.36</td>
+                      <td>0.60</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <p class="is-size-6 has-text-weight-bold mt-4 mb-2 has-text-centered">Table 2b: 1-Shot Setting</p>
+              <div class="table-container">
+                <table class="table is-hoverable">
+                  <thead>
+                    <tr>
+                      <th rowspan="2">Method</th>
+                      <th rowspan="2">Venue</th>
+                      <th rowspan="2">Backbone</th>
+                      <th colspan="3">Validation</th>
+                      <th colspan="3">Test</th>
+                    </tr>
+                    <tr>
+                      <th>MAE &darr;</th>
+                      <th>RMSE &darr;</th>
+                      <th>R&sup2; &uarr;</th>
+                      <th>MAE &darr;</th>
+                      <th>RMSE &darr;</th>
+                      <th>R&sup2; &uarr;</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>FamNet</td>
+                      <td>CVPR'21</td>
+                      <td>R50</td>
+                      <td>33.11&plusmn;0.68</td>
+                      <td>68.95&plusmn;4.15</td>
+                      <td>0.58&plusmn;0.05</td>
+                      <td>33.63&plusmn;1.13</td>
+                      <td>62.07&plusmn;2.94</td>
+                      <td>0.41&plusmn;0.05</td>
+                    </tr>
+                    <tr>
+                      <td>BMNet+</td>
+                      <td>CVPR'22</td>
+                      <td>R50</td>
+                      <td>29.33&plusmn;0.13</td>
+                      <td>77.50&plusmn;0.31</td>
+                      <td>0.48&plusmn;0.05</td>
+                      <td>27.84&plusmn;0.10</td>
+                      <td>56.98&plusmn;0.12</td>
+                      <td>0.50&plusmn;0.01</td>
+                    </tr>
+                    <tr>
+                      <td>CountTR</td>
+                      <td>BMVC'22</td>
+                      <td>Hybrid</td>
+                      <td>20.16&plusmn;0.05</td>
+                      <td>55.15&plusmn;0.82</td>
+                      <td>0.73&plusmn;0.01</td>
+                      <td>25.19&plusmn;0.14</td>
+                      <td>50.23&plusmn;0.24</td>
+                      <td>0.62&plusmn;0.00</td>
+                    </tr>
+                    <tr>
+                      <td>LOCA</td>
+                      <td>ICCV'23</td>
+                      <td>R50</td>
+                      <td>17.19&plusmn;0.31</td>
+                      <td>48.14&plusmn;2.19</td>
+                      <td>0.80&plusmn;0.02</td>
+                      <td>21.47&plusmn;0.29</td>
+                      <td>42.36&plusmn;0.72</td>
+                      <td>0.73&plusmn;0.01</td>
+                    </tr>
+                    <tr>
+                      <td>DAVE</td>
+                      <td>CVPR'24</td>
+                      <td>R50</td>
+                      <td class="best-score">16.06&plusmn;0.60</td>
+                      <td>48.35&plusmn;1.19</td>
+                      <td>0.80&plusmn;0.01</td>
+                      <td class="best-score">19.47&plusmn;0.44</td>
+                      <td>42.54&plusmn;0.35</td>
+                      <td>0.72&plusmn;0.00</td>
+                    </tr>
+                    <tr>
+                      <td>CACVIT</td>
+                      <td>AAAI'24</td>
+                      <td>ViT-B</td>
+                      <td>17.96&plusmn;0.16</td>
+                      <td>43.38&plusmn;0.47</td>
+                      <td>0.83&plusmn;0.00</td>
+                      <td>22.06&plusmn;0.11</td>
+                      <td>42.97&plusmn;0.81</td>
+                      <td>0.71&plusmn;0.01</td>
+                    </tr>
+                    <tr>
+                      <td>TasselNetV4</td>
+                      <td>ISPRS'26</td>
+                      <td>ViT-B</td>
+                      <td>13.49&plusmn;0.02</td>
+                      <td>41.30&plusmn;0.46</td>
+                      <td>0.85&plusmn;0.00</td>
+                      <td>22.20&plusmn;0.11</td>
+                      <td>48.70&plusmn;0.26</td>
+                      <td>0.67&plusmn;0.00</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+
+              <h3 class="section-subtitle">2. Cross-Dataset Transfer Analysis</h3>
+              <p>
+                Generic models trained on FSC-147 suffer severe performance degradation on TPC-268 (MAE increases up
+                to 225%). Conversely, models trained on plant data transfer more robustly to generic scenes, indicating
+                that plant counting presents a more challenging representation problem due to morphological complexity.
+              </p>
+
+              <div class="table-container">
+                <table class="table is-hoverable">
+                  <thead>
+                    <tr>
+                      <th rowspan="2">Method</th>
+                      <th colspan="2">FSC-147 &rarr; TPC-268</th>
+                      <th colspan="2">TPC-268 &rarr; FSC-147</th>
+                    </tr>
+                    <tr>
+                      <th>MAE</th>
+                      <th>&Delta; vs Same-Domain</th>
+                      <th>MAE</th>
+                      <th>&Delta; vs Same-Domain</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>CountTR</td>
+                      <td>38.62</td>
+                      <td class="has-text-danger has-text-weight-bold">+225%</td>
+                      <td>26.53</td>
+                      <td class="has-text-danger">+5%</td>
+                    </tr>
+                    <tr>
+                      <td>CACVIT</td>
+                      <td>26.73</td>
+                      <td class="has-text-danger has-text-weight-bold">+147%</td>
+                      <td>17.88</td>
+                      <td class="has-text-success has-text-weight-bold">-19%</td>
+                    </tr>
+                    <tr>
+                      <td>LOCA</td>
+                      <td>24.70</td>
+                      <td class="has-text-danger has-text-weight-bold">+130%</td>
+                      <td>15.16</td>
+                      <td class="has-text-success has-text-weight-bold">-13%</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+
+              <h3 class="section-subtitle">3. Zero-Shot and Foundation Models</h3>
+              <p>
+                Current zero-shot methods (GroundingREC) and vision-language backbones (BioCLIP2) underperform
+                relative to visual-exemplar methods. The low-resolution feature maps of ViT architectures, without
+                specific adapter designs, are suboptimal for dense prediction, suggesting that explicit modeling of
+                visual similarity remains more effective than text-only or off-the-shelf foundation features.
+              </p>
+              <div class="table-container" style="max-width: 600px;">
+                <table class="table is-hoverable">
+                  <thead>
+                    <tr>
+                      <th>Method / Paradigm</th>
+                      <th>Test MAE</th>
+                      <th>Test R&sup2;</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>LOCA (3-Shot Visual)</td>
+                      <td class="best-score">17.51</td>
+                      <td class="best-score">0.78</td>
+                    </tr>
+                    <tr>
+                      <td>GroundingREC (Zero-Shot Text)</td>
+                      <td>24.14</td>
+                      <td>0.53</td>
+                    </tr>
+                    <tr>
+                      <td>LOCA + BioCLIP2 Backbone</td>
+                      <td>34.75</td>
+                      <td>0.29</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+
+              <h3 class="section-subtitle">4. Taxonomic Knowledge as Inductive Bias</h3>
+              <p>
+                Incorporating Linnaean taxonomy as textual prompts yields consistent error reduction (e.g., MAE drops
+                from 19.52 to 16.90). This confirms that structured biological knowledge provides a practical and
+                effective inductive bias for fine-grained counting tasks.
+              </p>
+              <div class="table-container" style="max-width: 700px;">
+                <table class="table is-hoverable">
+                  <thead>
+                    <tr>
+                      <th>Target Specification</th>
+                      <th>MAE &darr;</th>
+                      <th>RMSE &darr;</th>
+                      <th>R&sup2; &uarr;</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>3 visual exemplars</td>
+                      <td>19.52</td>
+                      <td>50.51</td>
+                      <td>0.61</td>
+                    </tr>
+                    <tr>
+                      <td>+ species name</td>
+                      <td>17.53</td>
+                      <td>44.80</td>
+                      <td>0.69</td>
+                    </tr>
+                    <tr>
+                      <td><strong>+ full taxonomy</strong></td>
+                      <td class="best-score">16.90</td>
+                      <td class="best-score">43.32</td>
+                      <td class="best-score">0.71</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="has-text-centered mt-4 mb-1">
+                <img src="static/images/figure6_tsne.jpg" alt="t-SNE Feature Space" class="image-block"
+                  style="max-width: 440px; margin: 0 auto; display: block;" />
+                <p class="image-caption" style="text-align: center; margin-top: 5px;">
+                  <strong>t-SNE visualization.</strong> It highlights that visual features alone struggle to cluster
+                  deep biological taxa.
+                </p>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section py-6">
+      <div class="container is-max-desktop">
+        <h2 class="title is-3 has-text-centered mb-4">TPC-268 Showcase</h2>
+
+        <div class="mb-6">
+          <img src="static/images/carousel4.jpg" alt="Broad Coverage" class="image-block"
+            style="border: none; box-shadow: none;" />
+          <p class="image-caption" style="text-align: center; margin-top: 5px;">
+            <strong>TPC-268 diversity across scales.</strong> Multi-scale morphologies from microscopic tissues to
+            canopy-level remote sensing.
+          </p>
+        </div>
+
+        <div>
+          <img src="static/images/supp_qualitative.jpg" alt="Qualitative Predictions" class="image-block"
+            style="border: none; box-shadow: none;" />
+          <p class="image-caption" style="text-align: center; margin-top: 5px;">
+            <strong>Qualitative results on TPC-268.</strong> Predicted counting results from representative methods
+            across diverse scenarios.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="BibTeX">
+      <div class="container is-max-desktop content">
+        <div class="bibtex-header">
+          <h2 class="title is-4 mb-0">BibTeX</h2>
+          <button type="button" class="button is-dark is-rounded is-small copy-bibtex-btn" onclick="copyBibTeX()"
+            aria-label="Copy BibTeX citation">
+            <span class="icon"><i class="fas fa-copy" aria-hidden="true"></i></span>
+            <span class="copy-text">Copy</span>
+          </button>
+        </div>
+        <pre class="bibtex-pre"
+          style="border-radius: 6px; background-color: #f8fafc; color: #1e293b; border: 1px solid #e2e8f0;"><code id="bibtex-code" style="font-family: Consolas, monospace;">@article{xu2026plant,
+  title={Plant Taxonomy Meets Plant Counting: A Fine-Grained, Taxonomic Dataset for Counting Hundreds of Plant Species},
+  author={Xu, Jinyu and Hu, Tianqi and Hu, Xiaonan and Zhou, Letian and Cao, Songliang and Zhang, Meng and Lu, Hao},
+  journal={arXiv preprint arXiv:2603.21229},
+  year={2026}
+}</code></pre>
+      </div>
+    </section>
+
+    <footer class="footer py-4 has-background-white">
+      <div class="container">
+        <div class="columns is-centered">
+          <div class="column is-8">
+            <div class="content has-text-centered">
+              <p class="is-size-7 has-text-grey">
+                This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template"
+                  target="_blank" class="has-text-grey-dark">Academic Project Page Template</a> which was adopted from
+                the <a href="https://nerfies.github.io" target="_blank" class="has-text-grey-dark">Nerfies</a> project
+                page.
+                You are free to borrow the source code of this website, we just ask that you link back to this page in
+                the footer. <br> This website is licensed under a <a rel="license"
+                  href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank"
+                  class="has-text-grey-dark">Creative Commons
+                  Attribution-ShareAlike 4.0 International License</a>.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+  </main>
+</body>
+
+</html>
